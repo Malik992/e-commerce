@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { CurrentUserContext } from "container/CurrentUser";
 import { withRouter } from "react-router-dom";
-import { HeaderNav } from "components/Header";
+import Page from "constants/layouts";
 
 export const HomePage = withRouter((props: any) => {
   const { isLoggedIn, setLoggedIn } = useContext(CurrentUserContext);
@@ -20,8 +20,9 @@ export const HomePage = withRouter((props: any) => {
   }, [isLoggedIn, setLoggedIn, props.history]);
   return (
     <>
-      <HeaderNav />
-      <p>fghjk</p>
+      <Page>
+        <p>fghjk</p>
+      </Page>
     </>
   );
 });
