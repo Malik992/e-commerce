@@ -1,8 +1,21 @@
 import React from "react";
-import { AllRoutes } from "pages/AllRoutes";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "styled-components";
+import { muiTheme } from "styles/index";
+import { AllRoutes } from "router/index";
+
+const theme = createMuiTheme(muiTheme);
 
 function App() {
-  return <AllRoutes />;
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <MuiThemeProvider theme={theme}>
+          <AllRoutes />
+        </MuiThemeProvider>
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

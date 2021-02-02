@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { HomeOutlined } from "@material-ui/icons";
-import { useLocation } from "utils/hooks";
+import useLocation from "utils/hooks/useLocation";
 
 import "styled-components/macro";
 
