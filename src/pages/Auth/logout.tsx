@@ -1,7 +1,23 @@
-import React from "react";
+import { useContext } from "react";
 
-export const LogoutPage: React.FC<{ path: string }> = () => {
-  return <p> login form </p>;
-};
+import { useEffectOnce } from "utils/hooks";
+import { withRouter } from "react-router-dom";
+import { CurrentUserContext } from "container/CurrentUser";
+let mounted;
+const LogoutPage = withRouter((props) => {
+  const { signOut } = useContext(CurrentUserContext);
+  useEffectOnce(() => {
+    mounted = true;
+    if (mounted) {
+      signOut().then(() => props.history.push("/"));
+    }
+
+    return () => {
+      mounted = false;
+    };
+  });
+
+  return null;
+});
 
 export default LogoutPage;

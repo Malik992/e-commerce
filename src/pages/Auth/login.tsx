@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,12 +15,16 @@ import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { withRouter } from "react-router-dom";
+
 import {
   FormControl,
   InputLabel,
   OutlinedInput,
   InputAdornment,
 } from "@material-ui/core";
+import { CurrentUserContext } from "container/CurrentUser";
+import { CustomSpinner } from "components/Loader";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,13 +58,44 @@ const useStyles = makeStyles((theme) => ({
   },
   textFields: {},
 }));
-export const LoginPage: React.FC<{ path: string }> = () => {
+export const LoginPage = withRouter((props: any) => {
   const classes = useStyles();
   const [fields, setFields] = useState({
     email: null,
     password: null,
     showPassword: false,
   });
+  const [status, setStatus] = useState({
+    loading: false,
+    error: false,
+    success: false,
+  });
+  const { signIn, status: loginStatus } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    if (loginStatus.code === "ok") {
+      props.history.push("/");
+    }
+  }, [loginStatus.code, props.history]);
+
+  function handleChange(e: any) {
+    setFields({ ...fields, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(event: any) {
+    event.preventDefault();
+    event.persist();
+    setStatus({ loading: true, success: false, error: false });
+    const { uid } = await signIn(fields);
+    console.log(fields);
+
+    console.log(uid);
+    if (uid) {
+      setStatus({ loading: false, success: true, error: false });
+    } else {
+      setStatus({ loading: false, error: true, success: false });
+    }
+  }
 
   const handleClickShowPassword = () => {
     setFields({ ...fields, showPassword: !fields.showPassword });
@@ -78,79 +113,86 @@ export const LoginPage: React.FC<{ path: string }> = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <FormControl
-            variant="outlined"
-            style={{
-              display: "block",
-            }}
-          >
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-            <OutlinedInput
+        {status.loading ? (
+          <CustomSpinner />
+        ) : (
+          <form className={classes.form} onSubmit={handleSubmit} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type={fields.showPassword ? "text" : "password"}
-              id="password"
-              autoComplete="current-password"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {fields.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
+              id="email"
+              label="Adresse Email"
+              name="email"
+              autoComplete="email"
+              onChange={handleChange}
+              autoFocus
             />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                {/* Forgot password? */}
-              </Link>
+            <FormControl
+              variant="outlined"
+              style={{
+                display: "block",
+              }}
+            >
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+                required
+                fullWidth
+                name="password"
+                label="Mot de Passe"
+                type={fields.showPassword ? "text" : "password"}
+                id="password"
+                autoComplete="current-password"
+                onChange={handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {fields.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              {...(status.loading && { disabled: true })}
+            >
+              Se connecter
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  {/* Forgot password? */}
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        )}
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
   );
-};
+});
 
 export default LoginPage;
