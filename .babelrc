@@ -11,7 +11,8 @@
           "styles": "./src/styles/",
           "utils": "./src/utils/",
           "components": "./src/components/",
-          "container": "./src/container/"
+          "container": "./src/container/",
+          "assets": "./src/assets/"
         }
       }
     ]

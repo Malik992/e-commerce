@@ -1,21 +1,23 @@
 import * as React from "react";
-import { Router } from "@reach/router";
 import { MotherOfProviders } from "container";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { CustomSpinner } from "components/Loader";
 
 const HomePage = React.lazy(() => import("pages/Home"));
 const LoginPage = React.lazy(() => import("pages/Auth/login"));
 const LogoutPage = React.lazy(() => import("pages/Auth/logout"));
 
-const LoadingMessage = () => "I'm loading...";
+const LoadingMessage = () => <CustomSpinner />;
 export const AllRoutes = () => {
   return (
     <MotherOfProviders>
       <React.Suspense fallback={LoadingMessage}>
         <Router>
           <React.Fragment>
-            <HomePage path="/" />
-            <LoginPage path="/login" />
-            <LogoutPage path="/logout" />
+            <Route path="/" exact component={HomePage} />
+            <Route path="/login" exact component={LoginPage} />
+            <Route path="/logout" exact component={LogoutPage} />
+            <Route path="/logout" exact component={LogoutPage} />
           </React.Fragment>
         </Router>
       </React.Suspense>
