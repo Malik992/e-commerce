@@ -14,10 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "aliceblue",
       padding: "1rem",
       flexShrink: 0,
-      position: "fixed",
+      position: "relative",
       left: 0,
       bottom: 0,
-      width: "100%",
     },
   })
 );

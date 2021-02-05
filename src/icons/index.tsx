@@ -1,4 +1,7 @@
 import React from "react";
+import { ReactComponent as Whatsapp } from "./../assets/images/whatsapp.svg";
+
+export { Whatsapp };
 interface IconProps {
   height?: string | number;
   width?: string | number;
@@ -56,7 +59,7 @@ export const UserIcon = ({
         r="10.5"
         fill="#eceff1"
         stroke="#fff"
-        stroke-width="2px"
+        strokeWidth="2px"
       />
       <path
         fill={color}
