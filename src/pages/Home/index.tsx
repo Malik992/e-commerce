@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     media: {
       height: 0,
-      width: "auto",
-      paddingTop: "56.25%", // 16:9
+      width: "100%",
+      paddingTop: "70%", // 16:9
     },
     expand: {
       transform: "rotate(0deg)",
@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme: Theme) =>
     divBackground: {
       display: "flex",
       width: "100%",
+      "@media(minWidth: 780px)": {
+        width: "80%",
+      },
       height: "600px",
       backgroundPosition: "center",
       backgroundSize: "cover",
@@ -83,7 +86,6 @@ export const HomePage = withRouter((props: any) => {
     isHeLoggedIn();
     return () => isHeLoggedIn();
   }, [isLoggedIn, setLoggedIn, props.history]);
-  console.log(products);
   return (
     <>
       <Page>
@@ -93,53 +95,47 @@ export const HomePage = withRouter((props: any) => {
           </Grid>
           {products.map((item) => (
             <Grid item xs={12} sm={4} key={item.image}>
-              <Paper className={classes.paper}>
-                {/* card start */}
-                <Card className={classes.card}>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="recipe" className={classes.avatar}>
-                        {item.avatar}
-                      </Avatar>
-                    }
-                    title={item.headerTitle}
-                    subheader={item.subheader}
-                  />
-                  <CardMedia
-                    className={classes.media}
-                    // image={`assets/images/${item.image}`}
-                    image={`../../assets/images/${item.image}`}
-                    title={item.mediaTitle}
-                  />
+              <Card className={classes.card} style={{ margin: 10 }}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {item.avatar}
+                    </Avatar>
+                  }
+                  title={item.headerTitle}
+                  subheader={item.subheader}
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={require(`../../assets/images/${item.image}`)}
+                  title={item.mediaTitle}
+                />
 
-                  <CardContent>
-                    <Typography variant="body1" color="textSecondary" component="p">
-                      {item.description}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="primary"
-                      component="div"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <MonetizationOnOutlined /> {item.price}
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="shop" href={item.whatsapp}>
-                      <Whatsapp className={classes.whatsappIcon} />
-                    </IconButton>
-                  </CardActions>
-                </Card>
-
-                {/* end card */}
-              </Paper>
+                <CardContent>
+                  <Typography variant="body1" color="textSecondary" component="p">
+                    {item.description}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="primary"
+                    component="div"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <MonetizationOnOutlined /> {item.price}
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <IconButton aria-label="shop" href={item.whatsapp}>
+                    <Whatsapp className={classes.whatsappIcon} />
+                  </IconButton>
+                </CardActions>
+              </Card>
             </Grid>
           ))}
         </Grid>

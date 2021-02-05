@@ -38,8 +38,6 @@ export const HeaderNav = withRouter((props) => {
     position = "Home";
   }
 
-  console.log({ history, position });
-
   return (
     <HeaderNavStyled>
       <HeaderContainer>
