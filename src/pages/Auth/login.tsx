@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  textFields: {},
 }));
 export const LoginPage = withRouter((props: any) => {
   const classes = useStyles();
@@ -87,9 +86,7 @@ export const LoginPage = withRouter((props: any) => {
     event.persist();
     setStatus({ loading: true, success: false, error: false });
     const { uid } = await signIn(fields);
-    console.log(fields);
 
-    console.log(uid);
     if (uid) {
       setStatus({ loading: false, success: true, error: false });
     } else {

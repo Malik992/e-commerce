@@ -23,19 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Footer = withRouter((props) => {
   const classes = useStyles();
 
-  const { location, history } = props;
-  let position = "";
-
-  if (location.pathname === "/login") {
-    position = "Login";
-  } else if (location.pathname === "/") {
-    position = "Home";
-  } else {
-    position = "Home";
-  }
-
-  console.log({ history, position });
-
   return (
     <footer className={classes.divStyled}>
       <p>
