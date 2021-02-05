@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  CircularProgressStyled,
-  SpinnerWrapper,
-  LinearProgressStyled
-} from "./styles";
+import { CircularProgressStyled, SpinnerWrapper, LinearProgressStyled } from "./styles";
 import { useDelayNextChildren } from "utils/hooks";
 
 export const CustomSpinner = () => (
@@ -25,5 +21,23 @@ export const LinearLoader = ({ delay = 0 }) =>
   );
 
 LinearLoader.defaultProps = {
-  delay: 0
+  delay: 0,
+};
+
+interface ImageProps {
+  image: string;
+}
+
+export const ImageLoader = ({ image }: ImageProps) => {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: "45%",
+        left: "45%",
+      }}
+    >
+      <img width="100" src={image} alt="Loding......" />
+    </div>
+  );
 };

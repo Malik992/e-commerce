@@ -17,7 +17,7 @@ import {
 
 import "styled-components/macro";
 import { CurrentUserContext } from "container/CurrentUser";
-import { UserIcon, SeparatorIcon } from "icons";
+import { UserIcon } from "icons";
 
 export const HeaderNav = withRouter((props) => {
   const { location, history } = props;
@@ -49,21 +49,13 @@ export const HeaderNav = withRouter((props) => {
           </IconButton>
         ) : (
           <Link to="/">
-            <HeaderNavLogo src={Logo} alt="logo de Paps" height={40} />
+            <HeaderNavLogo src={Logo} alt="logo" height={40} />
           </Link>
         )}
         <HeaderNavBreadCrumb>
           <li>
             <Link to="/">Diayma Shop</Link>
           </li>
-          <li
-            style={{
-              height: "24px",
-            }}
-          >
-            <SeparatorIcon />
-          </li>
-          <li>{position}</li>
         </HeaderNavBreadCrumb>
         <HeaderNavRight>
           <Tooltip title="Déconnection" placement="bottom">

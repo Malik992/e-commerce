@@ -15,11 +15,12 @@ import {
   CardActions,
   Paper,
 } from "@material-ui/core";
-import CoverImage from "../../assets/images/cover-image1.jpg";
-import Product01 from "../../assets/images/les-savons-marseille--23785_fap_cg01.jpg";
+import CoverImage from "assets/images/cover-image1.jpg";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { MonetizationOnOutlined } from "@material-ui/icons";
 import { Whatsapp } from "icons";
 import { red } from "@material-ui/core/colors";
+import { products } from "constants/data";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -82,6 +83,7 @@ export const HomePage = withRouter((props: any) => {
     isHeLoggedIn();
     return () => isHeLoggedIn();
   }, [isLoggedIn, setLoggedIn, props.history]);
+  console.log(products);
   return (
     <>
       <Page>
@@ -89,44 +91,57 @@ export const HomePage = withRouter((props: any) => {
           <Grid item xs={12}>
             <div className={classes.divBackground}></div>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper className={classes.paper}>
-              {/* card start */}
-              <Card className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  title="Shrimp and Chorizo Paella"
-                  subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image={Product01}
-                  title="Paella dish"
-                />
-                <CardContent>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the
-                    mussels, if you like.
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <Whatsapp className={classes.whatsappIcon} />
-                  </IconButton>
-                </CardActions>
-              </Card>
+          {products.map((item) => (
+            <Grid item xs={12} sm={4} key={item.image}>
+              <Paper className={classes.paper}>
+                {/* card start */}
+                <Card className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        {item.avatar}
+                      </Avatar>
+                    }
+                    title={item.headerTitle}
+                    subheader={item.subheader}
+                  />
+                  <CardMedia
+                    className={classes.media}
+                    // image={`assets/images/${item.image}`}
+                    image={`../../assets/images/${item.image}`}
+                    title={item.mediaTitle}
+                  />
 
-              {/* end card */}
-            </Paper>
-          </Grid>
+                  <CardContent>
+                    <Typography variant="body1" color="textSecondary" component="p">
+                      {item.description}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="primary"
+                      component="div"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <MonetizationOnOutlined /> {item.price}
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <IconButton aria-label="shop" href={item.whatsapp}>
+                      <Whatsapp className={classes.whatsappIcon} />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+
+                {/* end card */}
+              </Paper>
+            </Grid>
+          ))}
         </Grid>
       </Page>
     </>
