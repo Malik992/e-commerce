@@ -13,7 +13,6 @@ import {
   CardContent,
   Typography,
   CardActions,
-  Paper,
 } from "@material-ui/core";
 import CoverImage from "assets/images/cover-image1.jpg";
 import FavoriteIcon from "@material-ui/icons/Favorite";
