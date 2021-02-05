@@ -1,17 +1,18 @@
 import * as React from "react";
 import { MotherOfProviders } from "container";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { CustomSpinner } from "components/Loader";
+import { ImageLoader } from "components/Loader";
+import Logo from "assets/images/shopping-logo.png";
 
 const HomePage = React.lazy(() => import("pages/Home"));
 const LoginPage = React.lazy(() => import("pages/Auth/login"));
 const LogoutPage = React.lazy(() => import("pages/Auth/logout"));
 
-const LoadingMessage = () => <CustomSpinner />;
+const LoadingMessage = () => <ImageLoader image={Logo} />;
 export const AllRoutes = () => {
   return (
     <MotherOfProviders>
-      <React.Suspense fallback={LoadingMessage}>
+      <React.Suspense fallback={<LoadingMessage />}>
         <Router>
           <React.Fragment>
             <Route path="/" exact component={HomePage} />
