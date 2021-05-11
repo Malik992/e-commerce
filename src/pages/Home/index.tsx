@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import CoverImage from "assets/images/cover-image1.jpg";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { MonetizationOnOutlined } from "@material-ui/icons";
+import { MonetizationOnOutlined, PlaceOutlined } from "@material-ui/icons";
 import { Whatsapp } from "icons";
 import { red } from "@material-ui/core/colors";
 import { products } from "constants/data";
@@ -123,6 +123,7 @@ export const HomePage = withRouter((props: any) => {
                       alignItems: "center",
                     }}
                   >
+                    <PlaceOutlined /> {item.location} &nbsp;&nbsp;&nbsp;&nbsp;
                     <MonetizationOnOutlined /> {item.price}
                   </Typography>
                 </CardContent>
